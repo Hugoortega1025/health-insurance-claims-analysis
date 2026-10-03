@@ -254,3 +254,20 @@ The root cause is still unknown.
 **Follow-up for the user:**
 - Free disk space (~8 GB left).
 - Consider moving the project out of `~/Documents`, or excluding it from iCloud, so that project files aren't evicted either.
+
+---
+
+## 2026-10-03: Version control and GitHub backup
+
+**Phase:** Tooling
+
+**Decision / Change:**
+- Initialized Git (branch `main`).
+- Pushed to a **private** GitHub repository: https://github.com/Hugoortega1025/health-insurance-claims-analysis
+- Data files, the DuckDB database, `.vscode/` and caches are excluded by `.gitignore`. Data is reproducible via `src/data/download_data.py` and the SQL files.
+
+**Rationale:**
+- The user is moving to a new MacBook, and iCloud had been unreliable for this project. GitHub provides a dependable backup and full history, and it is where the portfolio will be shown.
+- Private until the project is polished. Switching to public later preserves the history.
+
+**New-machine setup:** clone into a folder outside `~/Documents` (e.g., `~/Projects`) to avoid iCloud eviction. Then recreate the environment and rebuild the database from the SQL files.
