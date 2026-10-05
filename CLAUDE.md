@@ -47,9 +47,9 @@ Act as a senior data scientist and project mentor.
 - SQL: `01_load` → `02_profiling` → `03_analysis`.
 - Notebooks are for exploration and narrative. Reusable logic goes in `src/`.
 - `reports/findings/` holds only conclusions from analysis that was actually run.
-- Disk space on the user's machine is limited (~8 GB free as of 2026-10-03).
-- **The Python environment lives outside the project:** `~/.virtualenvs/insurance-claims` (VS Code points to it via `.vscode/settings.json`). The project sits in `~/Documents`, which syncs to iCloud with storage optimization, so macOS evicts files to the cloud. A `.venv` inside the project ended up cloud-only and made Python imports hang (notebook kernel timeouts, pip freezing). **Never create a virtual environment inside this project folder.** Run commands as `~/.virtualenvs/insurance-claims/bin/python`.
-- SQL is run in the DuckDB CLI (`duckdb data/processed/insurance.duckdb`, Homebrew install). Tables: `insurance` (raw, 1,340 rows), `insurance_cleaned` (1,332 rows).
+- Machine: new MacBook since 2026-10-04 (~390 GB free), Python 3.14 (python.org installer), no Homebrew.
+- **The Python environment lives outside the project:** `~/.virtualenvs/insurance-claims` (VS Code points to it via `.vscode/settings.json`). The project sits in `~/Documents`, which may sync to iCloud with storage optimization, so macOS can evict files to the cloud. On the old machine a `.venv` inside the project ended up cloud-only and made Python imports hang (notebook kernel timeouts, pip freezing). **Never create a virtual environment inside this project folder.** Run commands as `~/.virtualenvs/insurance-claims/bin/python`.
+- SQL is run in the DuckDB CLI (`duckdb data/processed/insurance.duckdb`; installed with the official script at `~/.duckdb/cli/latest/duckdb`, on PATH via `~/.zshrc`). Tables: `insurance` (raw, 1,340 rows), `insurance_cleaned` (1,332 rows).
 
 ## Current Status
 

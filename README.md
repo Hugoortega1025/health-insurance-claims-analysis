@@ -2,7 +2,7 @@
 
 An end-to-end data science project. It uses SQL, statistics, machine learning and Tableau to understand which personal and health characteristics are associated with higher health insurance claims, and to predict an individual's claim amount.
 
-> **Status:** Step 1 (Business Understanding and Data Setup). This repository has **no analytical results** yet. Findings will be added only after the analysis has actually been done.
+> **Status:** Step 4 (Statistical Analysis) is next. Findings are added only after the analysis has actually been done.
 
 ---
 
@@ -46,7 +46,7 @@ Details for each step are in [docs/methodology.md](docs/methodology.md).
 
 ## Technical Stack
 
-Python 3.13 · DuckDB (SQL) · pandas · SciPy · statsmodels · scikit-learn · matplotlib/seaborn · Tableau
+Python 3.14 · DuckDB (SQL) · pandas · SciPy · statsmodels · scikit-learn · matplotlib/seaborn · Tableau
 
 ## Repository Structure
 
@@ -81,12 +81,24 @@ Python 3.13 · DuckDB (SQL) · pandas · SciPy · statsmodels · scikit-learn ·
 
 ## Setup
 
+Requires Python 3.13+ and the [DuckDB CLI](https://duckdb.org/docs/installation/).
+
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+# 1. Create a virtual environment (kept outside the project folder) and install packages
+python3 -m venv ~/.virtualenvs/insurance-claims
+source ~/.virtualenvs/insurance-claims/bin/activate
 pip install -r requirements.txt
+
+# 2. Download the raw data (prints a SHA-256 checksum)
 python -m src.data.download_data
+
+# 3. Build the DuckDB database: raw table (1,340 rows) and cleaned table (1,332 rows)
+duckdb data/processed/insurance.duckdb \
+  -c ".read sql/01_load/load_raw.sql" \
+  -c ".read sql/01_load/02_clean_data.sql"
 ```
+
+On macOS with a python.org Python, if the download fails with `CERTIFICATE_VERIFY_FAILED`, run `Install Certificates.command` from the `/Applications/Python 3.x/` folder once.
 
 ## Current Status
 
@@ -94,7 +106,8 @@ python -m src.data.download_data
 |------|--------|
 | 1. Business understanding and data setup | Done |
 | 2. Data profiling and quality | Done ([summary](reports/findings/01_data_quality_summary.md)) |
-| 3. Exploratory data analysis | **Next** |
-| 4–7 | Not started |
+| 3. Exploratory data analysis | Done ([summary](reports/findings/02_eda_summary.md)) |
+| 4. Statistical analysis | **Next** |
+| 5–7 | Not started |
 
 See [docs/project_log.md](docs/project_log.md) for the decision history.

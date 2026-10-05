@@ -271,3 +271,69 @@ The root cause is still unknown.
 - Private until the project is polished. Switching to public later preserves the history.
 
 **New-machine setup:** clone into a folder outside `~/Documents` (e.g., `~/Projects`) to avoid iCloud eviction. Then recreate the environment and rebuild the database from the SQL files.
+
+---
+
+## 2026-10-04: Environment rebuilt on the new MacBook
+
+**Phase:** Tooling (Step 3 in progress)
+
+**Decision / Change:**
+- The project stays in `~/Documents` for now (the user's choice). The virtual environment stays outside it, at `~/.virtualenvs/insurance-claims` (795 MB), so that iCloud can't evict it. `.vscode/settings.json` was recreated to point VS Code to it.
+- Python **3.14.8** (python.org installer) replaces 3.13. All packages in `requirements.txt` installed without problems (e.g., pandas 3.0.6, scikit-learn 1.9.1, statsmodels 0.15.0, duckdb 1.5.6).
+- Ran the installer's `Install Certificates.command` to fix the `CERTIFICATE_VERIFY_FAILED` error when downloading data.
+- DuckDB CLI **1.5.6** installed with the official script (`curl https://install.duckdb.org | sh`) at `~/.duckdb/cli/latest/`, and added to PATH in `~/.zshrc`. Homebrew is not installed.
+- Re-downloaded the data. The SHA-256 matches the 2026-10-01 value (`2e35f2fd…b86e`), so it is the identical file. The rebuilt database has 1,340 raw rows and 1,332 cleaned rows, matching Step 2.
+- `notebooks/02_eda.ipynb` runs end to end (about 5 s).
+- README Setup section updated to match (environment outside the project, database rebuild commands); status banner corrected.
+
+**Rationale:**
+- The official DuckDB installer needs no admin rights and takes ~50 MB, versus a full Homebrew install. Reusing the system Python avoids an extra download.
+
+**Notes:**
+- `requirements-lock.txt` is still deferred to Step 7, as planned.
+
+---
+
+## 2026-10-04: Data-quality finding: men and women cover different age ranges
+
+**Phase:** Step 3. EDA (found while plotting smokers by gender and age)
+
+**Finding** (`insurance_cleaned`, checked in DuckDB): in the whole dataset, men are aged **18–50** and women **25–60**. There are no men over 50 and no women under 25. The pattern holds for smokers and non-smokers alike.
+
+**Consequences:**
+- **Provenance:** further evidence that the data is synthetic or not representative, alongside the 47.9% diabetes prevalence. To be added to the README limitations.
+- **Step 4:** `gender` and `age` are confounded. Any raw difference in claims between men and women may partly reflect age, so gender effects must be read from a multiple regression that holds age constant, not from a two-group comparison alone.
+- **Step 5:** the fairness comparison with and without `gender` is less clean, because gender partly stands in for age.
+
+**Decision:** No change to the data. This is a property of the dataset, not an error to fix.
+
+---
+
+## 2026-10-05: Step 3 complete
+
+**Phase:** Step 3. EDA
+
+**Summary:** See `reports/findings/02_eda_summary.md`. Main patterns:
+- Smoking is the largest single difference: median claim 34,456 for smokers vs. 7,365 for non-smokers.
+- Smoking and BMI interact. Smokers' claims form two peaks, separated by a BMI of 30. For smokers, a BMI of 30 or more adds about 20,700 to the median claim; for non-smokers, about 1,300.
+- Blood pressure (r = 0.53 with claim) largely overlaps with smoking and, among smokers, with BMI.
+- The northeast has higher claims, even among non-smokers.
+- Age, gender, diabetic status and children show little visible relationship with claims.
+- Six hypotheses and modeling notes for Step 4 are listed in the findings file and in the notebook.
+
+**Decisions:**
+- Medians are the typical value in all comparisons, because claims are right-skewed (skewness 1.51).
+- Raw vs. log claims is **not** decided yet. Log claims have skewness near zero but several peaks, so Step 4 decides with residual diagnostics.
+- A BMI-30 indicator interacted with smoking will be tested in Step 4, because BMI acts like a step for smokers rather than a straight line.
+- Every number in the notebook's tables comes from a saved query: `sql/03_analysis/01`–`05`, plus `sql/02_profiling/06_age_range_by_gender.sql`.
+
+**Corrections made during the step:**
+- The first claim-distribution insight said "most claims fall between 8,000 and 13,000". The actual middle half is 4,760 to 16,781.
+- A first reading suggested that blood pressure's link with claim held within each smoking group. Splitting smokers by BMI showed that among smokers it is mostly a BMI effect.
+- The first age-by-gender chart showed an apparent spike of women aged 60. It was a binning artifact (ages 59 and 60 were drawn in one bar), fixed by plotting one bar per whole age.
+
+**Notebook rewrite:**
+- `notebooks/02_eda.ipynb` was restructured into nine sections that follow the order of the exploration.
+- Markdown is written in the moment: what was seen at each point, with open questions. The overall summary at the top is labeled as written afterwards.
+- No bold text. The tone mixes technical and plain language for GitHub readers.
