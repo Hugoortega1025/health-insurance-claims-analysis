@@ -337,3 +337,29 @@ The root cause is still unknown.
 - `notebooks/02_eda.ipynb` was restructured into nine sections that follow the order of the exploration.
 - Markdown is written in the moment: what was seen at each point, with open questions. The overall summary at the top is labeled as written afterwards.
 - No bold text. The tone mixes technical and plain language for GitHub readers.
+
+---
+
+## 2026-10-07: Step 4 complete
+
+**Phase:** Step 4. Statistical analysis
+
+**Summary:** See `reports/findings/03_statistical_analysis_summary.md`.
+- Hypotheses 1, 2, 4 and 5 are supported, hypothesis 3 is not, and hypothesis 6 is partly supported (children is significant once smoking is held constant).
+
+**Decisions:**
+- **Final model: Model 2**, OLS on claim in dollars with a smoking × BMI 30+ interaction. R² 0.792; it removes Model 1's residual bands and heteroscedasticity (Breusch-Pagan p = 0.185).
+- **Log(claim) rejected.** It fixes the residual skew but brings back heteroscedasticity and adds a systematic slope among smokers. Effects in this data appear to add up in dollars rather than multiply.
+- **Gamma GLMs tried** because gamma is the industry standard for claim amounts.
+  - The log link rejected, for the same reasons as the log model.
+  - The identity link gives the same conclusions as Model 2, but its variance assumption fits this data worse. It is reported as a robustness check.
+- **Robust standard errors (HC3)** used as a check; no conclusion changed.
+- **Variables were not dropped for non-significance.** They were chosen before fitting; dropping them would overstate the remaining results, and age is needed to interpret gender.
+- **Separate group tests (t-tests, ANOVA) skipped.** The methodology lists them, but the regression answers the same questions while holding other variables constant. Running both would duplicate results.
+
+**Notebook conventions adopted:**
+- Every number quoted in the markdown is printed by a cell in the notebook.
+- Code stays at the user's own level (plain statsmodels calls, short comments).
+- Markdown is written in the moment, with no bold and light jargon.
+
+**For Step 5:** Model 2's formula is the linear baseline to compare against Ridge/Lasso, random forest and gradient boosting. One question to answer: can tree models find the smoking × BMI interaction without being told about it?
