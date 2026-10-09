@@ -363,3 +363,25 @@ The root cause is still unknown.
 - Markdown is written in the moment, with no bold and light jargon.
 
 **For Step 5:** Model 2's formula is the linear baseline to compare against Ridge/Lasso, random forest and gradient boosting. One question to answer: can tree models find the smoking × BMI interaction without being told about it?
+
+---
+
+## 2026-10-09: Step 5 complete
+
+**Phase:** Step 5. Predictive modeling
+
+**Summary:** See `reports/findings/04_modeling_summary.md`.
+- Final model: gradient boosting, with test MAE 3,697 against 8,183 for the median baseline (55% lower).
+- Linear regression with the Step 4 interaction comes within 4–9% of it (test MAE 4,083).
+
+**Decisions:**
+- **Baseline = training median** (MAE 8,394), the stronger of the two constant baselines, since the median minimizes absolute error.
+- **Model selection by 5-fold cross-validation on the training set.** Gradient boosting was chosen before the test set was used, because it won in every fold. The test set was used once.
+- **Linear regression kept as the explainable alternative.** It is slightly less accurate, but its coefficients are in dollars, which matters if prices must be explained.
+- **Ridge/Lasso not pursued further.** No gain at alpha = 1; the model is not overfitting.
+- **Hyperparameter tuning and partial dependence plots skipped.** This keeps the scope modest; the reasons are in the findings file.
+- **Input preparation moved to `src/models/features.py` (`build_features`).** Columns are kept in the original table order, because tree models break ties by column order: a different order shifted cross-validated MAE by a few dollars.
+
+**Fairness:** Gender adds nothing (+7) and can be dropped. Region adds about 100 per person. BMI and blood pressure are health status under the ACA, so this limits where the model can be used for pricing. These points carry into the Step 7 recommendations.
+
+**For Step 6 (Tableau):** the headline numbers are baseline vs. model MAE, the smoking × BMI interaction, and where the model fails (high-claim non-smokers).

@@ -2,7 +2,7 @@
 
 An end-to-end data science project. It uses SQL, statistics, machine learning and Tableau to understand which personal and health characteristics are associated with higher health insurance claims, and to predict an individual's claim amount.
 
-> **Status:** Step 5 (Predictive Modeling) is next. Findings are added only after the analysis has actually been done.
+> **Status:** Step 6 (Tableau Dashboard) is next. Findings are added only after the analysis has actually been done.
 
 ---
 
@@ -108,7 +108,8 @@ On macOS with a python.org Python, if the download fails with `CERTIFICATE_VERIF
 | 2. Data profiling and quality | Done ([summary](reports/findings/01_data_quality_summary.md)) |
 | 3. Exploratory data analysis | Done ([summary](reports/findings/02_eda_summary.md)) |
 | 4. Statistical analysis | Done ([summary](reports/findings/03_statistical_analysis_summary.md)) |
-| 5. Predictive modeling | **Next** |
-| 6–7 | Not started |
+| 5. Predictive modeling | Done ([summary](reports/findings/04_modeling_summary.md)) |
+| 6. Tableau dashboard | **Next** |
+| 7. Recommendations | Not started |
 
 See [docs/project_log.md](docs/project_log.md) for the decision history.
