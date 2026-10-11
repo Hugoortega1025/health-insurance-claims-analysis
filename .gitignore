@@ -44,3 +44,7 @@ tableau/**/*.twbx
 
 # Tableau temporary/lock files
 tableau/.~*
+
+# Local-only working files (kept on this machine, not published)
+CLAUDE.md
+docs/project_log.md

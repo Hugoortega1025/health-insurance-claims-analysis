@@ -4,7 +4,7 @@ Usage (from the project root):
     python -m src.data.download_data
 
 The raw file is never modified after download. A SHA-256 checksum is printed
-so the exact file version can be recorded in docs/project_log.md; if the
+so the exact file version can be recorded; if the
 upstream file ever changes, the checksum will no longer match.
 """
 

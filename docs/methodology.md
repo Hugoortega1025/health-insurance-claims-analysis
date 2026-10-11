@@ -6,7 +6,7 @@ This document defines the 7 steps of the project. Each step lists its **objectiv
 
 **Target variable:** `claim`, the insurance claim amount (continuous). This makes it a **regression** problem.
 
-The steps are ordered, but real projects iterate. If a later step shows a problem in an earlier one, go back, fix it, and record the change in `docs/project_log.md`.
+The steps are ordered, but real projects iterate. If a later step shows a problem in an earlier one, go back, fix it, and record the change.
 
 ---
 
@@ -19,7 +19,7 @@ The steps are ordered, but real projects iterate. If a later step shows a proble
   - Decide what "good enough" accuracy means. How large an error (in dollars) would still be useful?
   - Load the CSV into a DuckDB database as a raw table (`sql/01_load/`), without modifying it.
   - Record the data's provenance and its limitations. The origin is undocumented, so we can't assume the data is real.
-- **Outputs:** Problem statement in the README; load script; project log entry.
+- **Outputs:** Problem statement in the README; load script.
 - **Key questions:** Who would use this model, and for what decision? Which variables would be legal or ethical to use in real insurance pricing?
 - **Skills practiced:** Problem framing, reproducible data loading.
 

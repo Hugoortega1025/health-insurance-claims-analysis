@@ -115,7 +115,7 @@ Evidence and confidence for each: [recommendations](reports/findings/05_recommen
 
 Tools: Python · SQL (DuckDB) · pandas · statsmodels · scikit-learn · matplotlib/seaborn · Tableau
 
-Decisions and their reasons are recorded in the [project log](docs/project_log.md); the full methodology is in [docs/methodology.md](docs/methodology.md).
+The full methodology is in [docs/methodology.md](docs/methodology.md).
 
 ## How to reproduce
 
@@ -162,5 +162,5 @@ On macOS with a python.org Python, if the download fails with `CERTIFICATE_VERIF
 ├── reports/
 │   ├── figures/            Charts used in this README
 │   └── findings/           Written findings for each step and the recommendations
-└── docs/                   Methodology, data dictionary, project log
+└── docs/                   Methodology and data dictionary
 ```
