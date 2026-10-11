@@ -2,7 +2,7 @@
 
 Dataset: `insurance_cleaned`, 1,332 policyholders, split 80/20 (1,065 training, 267 test, `random_state=42`). Notebook: `notebooks/04_modeling.ipynb`. Input preparation: `src/models/features.py`. Every number below is printed by a cell in the notebook.
 
-Business question: how accurately can an insurer's pricing team predict a customer's claim? Accuracy is measured by MAE (mean absolute error) in dollars. Claim units are undocumented and the data may be synthetic.
+Business question: how accurately can a health insurer forecast each member's claim cost, for budgeting and prevention planning? Accuracy is measured by MAE (mean absolute error) in dollars. Claim units are undocumented and the data may be synthetic.
 
 ## Results
 

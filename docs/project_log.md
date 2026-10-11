@@ -419,3 +419,28 @@ The root cause is still unknown.
   - "on average" is kept in the forecast wording.
 - **Manager-friendly labels:** "Flat estimate (same for everyone)" rather than "baseline", and "Our Forecast Model (Gradient Boosting)".
 - **Data source note** goes in the Tableau Public workbook description and the README, not on the dashboard.
+
+---
+
+## 2026-10-11: Step 7: recommendations, README and reproducibility
+
+**Phase:** Step 7. Recommendations and documentation
+
+**Decision / Change:**
+- **`reports/findings/05_recommendations.md`:** five recommendations, each with its evidence and its strength. The prevention recommendation is framed as a **pilot with a comparison group**, because the data shows association, not that prevention would lower costs.
+- **README rewritten results-first:**
+  - executive summary;
+  - business problem in the claim cost forecasting framing;
+  - data and caveats;
+  - four key findings (interaction, prevention target, forecast accuracy, limits);
+  - recommendations, limitations, an approach table linking each step, and how to reproduce.
+- **Framing realigned** from premium pricing to claim cost forecasting in the notebook 04 markdown and the Step 5 findings file (no outputs changed).
+- **README chart** `reports/figures/bmi_smoking_claims.png` is saved by notebook 02 in the dashboard colors.
+- **`requirements-lock.txt`** added (`pip freeze` of the project environment, Python 3.14.8).
+
+**Reproducibility check:**
+- The project (minus data and git history) was copied into a fresh folder and rebuilt in a brand-new environment, following only the README.
+- The download checksum matched, and the database had 1,340 / 1,332 rows.
+- All three notebooks ran without errors, and both Tableau files came out byte-for-byte identical to the originals.
+
+**Considered and skipped:** comparing total forecasts with actual totals for budgeting. The README therefore claims the model's value for per-member and per-group forecasts only, not for budget totals.
