@@ -41,3 +41,6 @@ tableau/**/*.twbx
 .DS_Store
 .vscode/
 .idea/
+
+# Tableau temporary/lock files
+tableau/.~*

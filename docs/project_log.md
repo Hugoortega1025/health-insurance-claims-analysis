@@ -385,3 +385,37 @@ The root cause is still unknown.
 **Fairness:** Gender adds nothing (+7) and can be dropped. Region adds about 100 per person. BMI and blood pressure are health status under the ACA, so this limits where the model can be used for pricing. These points carry into the Step 7 recommendations.
 
 **For Step 6 (Tableau):** the headline numbers are baseline vs. model MAE, the smoking × BMI interaction, and where the model fails (high-claim non-smokers).
+
+---
+
+## 2026-10-10: Step 6 complete (Tableau dashboard)
+
+**Phase:** Step 6. Tableau dashboard
+
+**Published:** https://public.tableau.com/views/Insurance_Dashboard_17916830318640/ClaimCostForecasting.
+- Screenshot: `reports/figures/tableau_dashboard.png`.
+- Workbook: `tableau/Insurance_Dashboard.twb`. It reads the CSVs in `data/processed/`, which are not committed and can be rebuilt with the SQL and notebook below.
+
+**Framing change (applies to Step 7):**
+- The project is framed as **claim cost forecasting for a health insurer**: budgeting for future claims, setting the overall premium level, and targeting prevention programs.
+- It is **not** individual premium pricing. Under the ACA, individual-market premiums cannot vary by health status (BMI, blood pressure), only by age, tobacco use, location and family size.
+- The README "Business Problem" section and the notebook 04 intro still describe pricing. Realign them in Step 7.
+
+**Data for Tableau:**
+- `sql/03_analysis/06_segment_shares.sql`: share of members vs. share of claim amount by smoking × BMI 30+. Obese smokers are 10.9% of members and 34.0% of claim amount.
+- `sql/03_analysis/07_tableau_export.sql`: one row per member with readable labels → `data/processed/tableau_members.csv`.
+- The last cell of `notebooks/04_modeling.ipynb` writes test-set MAEs → `data/processed/tableau_model_results.csv`, so the accuracy panel comes from code.
+
+**Design decisions:**
+- **Layout:** a KPI strip (members, total claims paid, average claim, typical claim), then four areas: what drives costs, the prevention target, forecast accuracy, and "What this means" with a recommendation.
+- **Action titles** state each panel's takeaway, for example "Obese smokers are 11% of members but 34% of claim costs".
+- **Color scheme**, to be reused in README figures:
+  - smokers orange `#eb6834` and non-smokers blue `#2a78d6` (same as the EDA notebook);
+  - grays for everything else (flat estimate `#b5b5b5`, forecast model `#4d4d4d`);
+  - no red or green, to stay colorblind-safe and avoid implying "bad" members.
+- **Honest visuals:**
+  - bars start at zero;
+  - the two share charts use the same fixed axis (0–50%) so their bars can be compared;
+  - "on average" is kept in the forecast wording.
+- **Manager-friendly labels:** "Flat estimate (same for everyone)" rather than "baseline", and "Our Forecast Model (Gradient Boosting)".
+- **Data source note** goes in the Tableau Public workbook description and the README, not on the dashboard.

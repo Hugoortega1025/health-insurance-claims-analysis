@@ -2,7 +2,7 @@
 
 An end-to-end data science project. It uses SQL, statistics, machine learning and Tableau to understand which personal and health characteristics are associated with higher health insurance claims, and to predict an individual's claim amount.
 
-> **Status:** Step 6 (Tableau Dashboard) is next. Findings are added only after the analysis has actually been done.
+> **Status:** Step 7 (Recommendations and Documentation) is next. Findings are added only after the analysis has actually been done.
 
 ---
 
@@ -29,6 +29,12 @@ This project asks:
 - **Source:** [github.com/Onurbltc/InsuranceData](https://github.com/Onurbltc/InsuranceData)
 - **Provenance:** The repository doesn't document where the data originally came from, or whether it is real or synthetic. All results describe this dataset only and shouldn't be read as facts about real-world insurance.
 - **Download:** run `python -m src.data.download_data`. The script prints a SHA-256 checksum for verification.
+
+## Dashboard
+
+[![Claim cost forecasting dashboard](reports/figures/tableau_dashboard.png)](https://public.tableau.com/views/Insurance_Dashboard_17916830318640/ClaimCostForecasting)
+
+[View the interactive dashboard on Tableau Public](https://public.tableau.com/views/Insurance_Dashboard_17916830318640/ClaimCostForecasting)
 
 ## Approach
 
@@ -109,7 +115,7 @@ On macOS with a python.org Python, if the download fails with `CERTIFICATE_VERIF
 | 3. Exploratory data analysis | Done ([summary](reports/findings/02_eda_summary.md)) |
 | 4. Statistical analysis | Done ([summary](reports/findings/03_statistical_analysis_summary.md)) |
 | 5. Predictive modeling | Done ([summary](reports/findings/04_modeling_summary.md)) |
-| 6. Tableau dashboard | **Next** |
-| 7. Recommendations | Not started |
+| 6. Tableau dashboard | Done ([Tableau Public](https://public.tableau.com/views/Insurance_Dashboard_17916830318640/ClaimCostForecasting)) |
+| 7. Recommendations and documentation | **Next** |
 
 See [docs/project_log.md](docs/project_log.md) for the decision history.
